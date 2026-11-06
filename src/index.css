@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-script: "Caveat", cursive;
+  --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream-50: #fbf7ee;
+  --color-cream-100: #f6efe1;
+  --color-cream-200: #ede1c9;
+  --color-cream-300: #e2d2b1;
+
+  --color-terra-100: #f8e4db;
+  --color-terra-200: #f0cbb8;
+  --color-terra-300: #e6a88d;
+  --color-terra-400: #da8b69;
+  --color-terra-500: #cc7050;
+  --color-terra-600: #b4573b;
+  --color-terra-700: #94462f;
+
+  --color-gold-300: #d9ba6f;
+  --color-gold-400: #c7a45a;
+  --color-gold-500: #b08d3e;
+  --color-gold-600: #96762f;
+
+  --color-olive-100: #e8e9d6;
+  --color-olive-200: #d7d9b9;
+  --color-olive-300: #bbc191;
+  --color-olive-400: #9ba670;
+  --color-olive-500: #7e8a5b;
+  --color-olive-600: #646e46;
+
+  --color-bark-100: #eadfd4;
+  --color-bark-300: #b59688;
+  --color-bark-400: #9a7a66;
+  --color-bark-500: #7a5c4b;
+  --color-bark-700: #4e362b;
+  --color-bark-900: #2e1e16;
+
+  --color-wpp-400: #3bd06d;
+  --color-wpp-500: #22c15e;
+  --color-wpp-600: #16a34a;
+  --color-wpp-700: #128041;
+
+  --shadow-soft: 0 20px 60px -20px rgba(78, 54, 43, 0.25);
+  --shadow-card: 0 24px 70px -28px rgba(78, 54, 43, 0.35);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-spin-slow: spin-slow 18s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream-50);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-terra-300);
+  color: var(--color-bark-900);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-terra-300);
+  border-radius: 999px;
+  border: 2px solid var(--color-cream-100);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-terra-400);
+}
+
+/* Grão artesanal sutil sobre toda a página */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--color-terra-400);
+  color: transparent;
+}
