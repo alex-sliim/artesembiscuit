@@ -1,7 +1,6 @@
 import { Heart, Mail, MapPin } from "lucide-react";
-import logo from "../assets/artesembiscuitt.png";
 import WhatsAppIcon from "./WhatsAppIcon";
-import { DEFAULT_MESSAGE, WHATSAPP_DISPLAY, waLink } from "../utils/whatsapp";
+import { DEFAULT_MESSAGE, LOGO_URL, WHATSAPP_DISPLAY, waLink } from "../utils/whatsapp";
 
 const nav = [
   { label: "Início", href: "#inicio" },
@@ -21,7 +20,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <img
-                  src={logo}
+                  src={LOGO_URL}
                   alt="Logo Artes em Biscuitt"
                   className="h-full w-full scale-[1.6] object-cover object-[50%_16%]"
                 />

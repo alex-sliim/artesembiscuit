@@ -1,9 +1,9 @@
-import topoCasamento from "../assets/produto-topo-casamento.jpg";
-import lembrancinhas from "../assets/produto-lembrancinhas.jpg";
-import caneca from "../assets/produto-caneca.jpg";
-import boneca from "../assets/produto-boneca.jpg";
-import maternidade from "../assets/produto-maternidade.jpg";
-import familia from "../assets/produto-familia.jpg";
+const topoCasamento = "/images/produto-topo-casamento.jpg";
+const lembrancinhas = "/images/produto-lembrancinhas.jpg";
+const caneca = "/images/produto-caneca.jpg";
+const boneca = "/images/produto-boneca.jpg";
+const maternidade = "/images/produto-maternidade.jpg";
+const familia = "/images/produto-familia.jpg";
 
 export interface Product {
   id: string;

@@ -3,7 +3,7 @@ import { Flower2, Sparkles } from "lucide-react";
 import Reveal from "./Reveal";
 import WhatsAppIcon from "./WhatsAppIcon";
 import { DEFAULT_MESSAGE, WHATSAPP_DISPLAY, waLink } from "../utils/whatsapp";
-import logo from "../assets/artesembiscuitt.png";
+import { LOGO_URL } from "../utils/whatsapp";
 
 export default function CtaFinal() {
   return (
@@ -46,7 +46,7 @@ export default function CtaFinal() {
           className="mx-auto h-24 w-24 overflow-hidden rounded-full border-4 border-cream-50/40 shadow-xl"
         >
           <img
-            src={logo}
+            src={LOGO_URL}
             alt="Artes em Biscuitt"
             className="h-full w-full scale-[1.6] object-cover object-[50%_16%]"
           />

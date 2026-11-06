@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "../assets/artesembiscuitt.png";
 import WhatsAppIcon from "./WhatsAppIcon";
-import { DEFAULT_MESSAGE, waLink } from "../utils/whatsapp";
+import { DEFAULT_MESSAGE, LOGO_URL, waLink } from "../utils/whatsapp";
 
 const links = [
   { label: "Início", href: "#inicio" },
@@ -41,7 +40,7 @@ export default function Navbar() {
             <div className="absolute inset-0 rounded-full bg-terra-300 blur-md opacity-60 transition-opacity group-hover:opacity-90" />
             <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
               <img
-                src={logo}
+                src={LOGO_URL}
                 alt="Logo Artes em Biscuitt"
                 className="h-full w-full scale-[1.6] object-cover object-[50%_16%]"
               />

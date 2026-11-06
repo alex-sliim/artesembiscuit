@@ -2,7 +2,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Check, Palette, ShieldCheck, Heart, Brush } from "lucide-react";
 import Reveal from "./Reveal";
-import atelier from "../assets/atelier.jpg";
+
+const atelier = "/images/atelier.jpg";
 
 const checkItems = [
   { icon: Palette, text: "Modelagem e pintura 100% manuais" },

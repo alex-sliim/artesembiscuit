@@ -8,9 +8,8 @@ import {
   useTransform,
 } from "framer-motion";
 import { ArrowDown, Flower2, Gift, Heart, Sparkles, Star } from "lucide-react";
-import logo from "../assets/artesembiscuitt.png";
 import { heroAvatars } from "../data/content";
-import { DEFAULT_MESSAGE, waLink } from "../utils/whatsapp";
+import { DEFAULT_MESSAGE, LOGO_URL, waLink } from "../utils/whatsapp";
 import WhatsAppIcon from "./WhatsAppIcon";
 
 function CountUp({
@@ -294,7 +293,7 @@ export default function Hero() {
               <div className="absolute inset-0 rounded-full border-2 border-dashed border-gold-400/60 animate-spin-slow" />
               <div className="absolute inset-[5%] overflow-hidden rounded-full bg-[#f3efe2] shadow-card ring-4 ring-white">
                 <img
-                  src={logo}
+                  src={LOGO_URL}
                   alt="Artes em Biscuitt — artesã modelando porcelana fria"
                   className="h-full w-full scale-[1.08] object-contain"
                 />
