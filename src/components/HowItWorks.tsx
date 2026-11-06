@@ -1,64 +1,106 @@
-import { useScrollY, whatsappLink } from "../hooks";
-import { WhatsAppIcon } from "./Icons";
+import { motion } from "framer-motion";
+import { MessageCircle, Palette, Package, Sparkles } from "lucide-react";
+import Reveal from "./Reveal";
+import { DEFAULT_MESSAGE, waLink } from "../utils/whatsapp";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const steps = [
-  { n: "01", title: "Escolha o modelo", text: "Navegue pelo catálogo ou envie sua referência. Vamos conversar sobre o tema, o estilo e a ocasião.", emoji: "🎀" },
-  { n: "02", title: "Personalize os detalhes", text: "Cores, nomes, datas, roupas, pets… tudo pode ser adaptado para deixar a peça com a sua cara.", emoji: "🎨" },
-  { n: "03", title: "Produção artesanal", text: "Modelagem manual, secagem natural e pintura minuciosa. Você acompanha o processo com fotos.", emoji: "🤲" },
-  { n: "04", title: "Receba em casa", text: "Embalagem cuidadosa e envio seguro para todo o Brasil. É só abrir e se emocionar.", emoji: "📦" },
+  {
+    icon: MessageCircle,
+    title: "Chame no WhatsApp",
+    text: "Conte sua ideia: ocasião, tema, cores e tudo o que estiver imaginando para a sua peça.",
+  },
+  {
+    icon: Palette,
+    title: "Criamos juntos",
+    text: "Definimos referências, cores e cada detalhe da personalização — a peça nasce do seu sonho.",
+  },
+  {
+    icon: Package,
+    title: "Produção artesanal",
+    text: "Modelamos, pintamos e finalizamos à mão. Você acompanha as etapas e vê sua peça ganhar vida.",
+  },
+  {
+    icon: Sparkles,
+    title: "Receba e se encante",
+    text: "Retirada ou envio com embalagem superprotegida. Depois é só viver o encantamento.",
+  },
 ];
 
 export default function HowItWorks() {
-  const y = useScrollY();
   return (
-    <section id="como-funciona" className="relative overflow-hidden bg-gradient-to-b from-blush-50 via-cream-100 to-cream-50 py-24 lg:py-32">
-      <div
-        className="pointer-events-none absolute -left-32 bottom-0 h-[26rem] w-[26rem] rounded-full bg-blush-200/50 blur-3xl"
-        style={{ transform: `translateY(${(y - 2000) * -0.06}px)` }}
-      />
+    <section
+      id="como-funciona"
+      className="relative overflow-hidden bg-gradient-to-b from-olive-100/60 via-cream-100 to-cream-50 py-20 lg:py-28"
+    >
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="reveal text-xs font-semibold uppercase tracking-[0.3em] text-gold-500">Como funciona</span>
-          <h2 className="reveal mt-4 font-serif text-4xl leading-tight text-cocoa-900 sm:text-5xl" style={{ transitionDelay: "80ms" }}>
-            Da sua ideia à peça pronta, <em className="italic text-blush-500">em 4 passos</em>
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="font-script text-3xl text-olive-500">
+            simples, rápido e carinhoso
+          </span>
+          <h2 className="mt-2 font-display text-4xl font-semibold leading-tight text-bark-900 sm:text-5xl">
+            Como funciona a <span className="italic text-olive-600">encomenda</span>
           </h2>
-          <p className="reveal mt-5 text-cocoa-700/85" style={{ transitionDelay: "160ms" }}>
-            Um processo simples, transparente e cheio de carinho — do primeiro "oi" até o momento de desembrulhar.
-          </p>
+        </Reveal>
+
+        <div className="relative mt-16">
+          {/* Linha conectora (desktop) */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            className="absolute left-[12%] right-[12%] top-9 hidden h-0.5 origin-left bg-gradient-to-r from-olive-300 via-terra-300 to-gold-300 lg:block"
+          />
+
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {steps.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.15 + i * 0.15,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="group relative text-center"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.08, rotate: -4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="relative mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[1.4rem] bg-white shadow-soft ring-1 ring-cream-200"
+                >
+                  <step.icon className="h-7 w-7 text-terra-500 transition-colors duration-300 group-hover:text-olive-500" />
+                  <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-terra-500 font-display text-sm font-bold text-white shadow-md">
+                    {i + 1}
+                  </span>
+                </motion.div>
+                <h3 className="mt-5 font-display text-xl font-semibold text-bark-900">
+                  {step.title}
+                </h3>
+                <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-bark-500">
+                  {step.text}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        <div className="relative mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* linha conectora */}
-          <div className="pointer-events-none absolute left-0 right-0 top-14 hidden h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent lg:block" />
-          {steps.map((s, i) => (
-            <div
-              key={s.n}
-              className="reveal group relative rounded-3xl bg-white/80 p-7 shadow-md shadow-cocoa-800/5 backdrop-blur transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blush-500/15"
-              style={{ transitionDelay: `${i * 120}ms` }}
-            >
-              <div className="relative mx-auto flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full bg-gradient-to-br from-blush-200 to-mint-200 text-3xl shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                {s.emoji}
-                <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-cocoa-800 font-serif text-xs font-bold text-white">
-                  {i + 1}
-                </span>
-              </div>
-              <span className="mt-6 block text-center font-serif text-sm tracking-[0.3em] text-gold-500">{s.n}</span>
-              <h3 className="mt-2 text-center font-serif text-2xl font-semibold text-cocoa-900">{s.title}</h3>
-              <p className="mt-3 text-center text-sm leading-relaxed text-cocoa-700/80">{s.text}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="reveal mt-14 text-center">
-          <a
-            href={whatsappLink("Olá! Quero começar meu pedido personalizado em biscuit.")}
+        <Reveal delay={0.2} className="mt-14 text-center">
+          <motion.a
+            href={waLink(DEFAULT_MESSAGE)}
             target="_blank"
-            rel="noreferrer"
-            className="btn-shine inline-flex items-center gap-2 rounded-full bg-blush-500 px-8 py-4 font-semibold text-white shadow-xl shadow-blush-500/30 transition-all duration-300 hover:-translate-y-1 hover:bg-blush-400"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.96 }}
+            className="inline-flex items-center gap-3 rounded-full bg-terra-500 px-9 py-4 text-base font-extrabold text-white shadow-xl shadow-terra-500/30 transition-colors hover:bg-terra-600"
           >
-            <WhatsAppIcon className="h-5 w-5" /> Começar meu pedido
-          </a>
-        </div>
+            <WhatsAppIcon className="h-5 w-5" />
+            Começar minha encomenda
+          </motion.a>
+        </Reveal>
       </div>
     </section>
   );

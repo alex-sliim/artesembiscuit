@@ -1,128 +1,134 @@
 import { useEffect, useState } from "react";
-import { cn } from "../utils/cn";
-import { useScrollY, whatsappLink } from "../hooks";
-import { CloseIcon, FlowerIcon, MenuIcon, WhatsAppIcon } from "./Icons";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import logo from "../assets/artesembiscuitt.png";
+import WhatsAppIcon from "./WhatsAppIcon";
+import { DEFAULT_MESSAGE, waLink } from "../utils/whatsapp";
 
 const links = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#criacoes", label: "Criações" },
-  { href: "#como-funciona", label: "Como Funciona" },
-  { href: "#depoimentos", label: "Depoimentos" },
-  { href: "#faq", label: "FAQ" },
+  { label: "Início", href: "#inicio" },
+  { label: "Criações", href: "#criacoes" },
+  { label: "Como funciona", href: "#como-funciona" },
+  { label: "Ateliê", href: "#atelie" },
+  { label: "Depoimentos", href: "#depoimentos" },
 ];
 
-export function Logo({ dark = true }: { dark?: boolean }) {
-  return (
-    <a href="#inicio" className="group flex items-center gap-2.5" aria-label="Artes em Biscuitt - início">
-      <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blush-200 to-mint-200 shadow-inner">
-        <FlowerIcon className="h-6 w-6 text-blush-500 transition-transform duration-700 ease-out group-hover:rotate-180" />
-        <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-gold-400 animate-pulse" />
-      </span>
-      <span className="leading-none">
-        <span className={cn("block font-serif text-xl font-semibold tracking-wide", dark ? "text-cocoa-900" : "text-white")}>
-          Artes em <span className="text-blush-500">Biscuitt</span>
-        </span>
-        <span className={cn("block text-[10px] uppercase tracking-[0.3em]", dark ? "text-cocoa-700/60" : "text-white/70")}>
-          arte feita à mão
-        </span>
-      </span>
-    </a>
-  );
-}
-
 export default function Navbar() {
-  const y = useScrollY();
-  const scrolled = y > 40;
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-cream-50/85 py-2 shadow-[0_8px_30px_-12px_rgba(91,74,68,0.25)] backdrop-blur-xl"
-          : "bg-transparent py-4"
-      )}
+          ? "bg-cream-50/85 shadow-[0_10px_40px_-18px_rgba(78,54,43,0.3)] backdrop-blur-xl"
+          : "bg-transparent"
+      }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Logo />
+      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
+        <a href="#inicio" className="group flex items-center gap-3">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-terra-300 blur-md opacity-60 transition-opacity group-hover:opacity-90" />
+            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
+              <img
+                src={logo}
+                alt="Logo Artes em Biscuitt"
+                className="h-full w-full scale-[1.6] object-cover object-[50%_16%]"
+              />
+            </div>
+          </div>
+          <div className="leading-tight">
+            <span className="block font-script text-2xl text-terra-600">
+              Artes em
+            </span>
+            <span className="-mt-1 block font-display text-lg font-bold tracking-wide text-bark-900">
+              BISCUITT
+            </span>
+          </div>
+        </a>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Navegação principal">
-          {links.map((l) => (
+        <div className="hidden items-center gap-8 lg:flex">
+          {links.map((link) => (
             <a
-              key={l.href}
-              href={l.href}
-              className="group relative text-sm font-medium text-cocoa-700 transition-colors hover:text-blush-500"
+              key={link.href}
+              href={link.href}
+              className="group relative text-sm font-bold text-bark-700 transition-colors hover:text-terra-600"
             >
-              {l.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold-400 transition-all duration-300 group-hover:w-full" />
+              {link.label}
+              <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-terra-500 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
-          <a
-            href={whatsappLink("Olá! Gostaria de solicitar um orçamento personalizado.")}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <motion.a
+            href={waLink(DEFAULT_MESSAGE)}
             target="_blank"
-            rel="noreferrer"
-            className="btn-shine inline-flex items-center gap-2 rounded-full bg-cocoa-800 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cocoa-800/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-cocoa-900 hover:shadow-xl"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.96 }}
+            className="hidden items-center gap-2 rounded-full bg-wpp-500 px-5 py-2.5 text-sm font-extrabold text-white shadow-lg shadow-wpp-500/30 transition-colors hover:bg-wpp-600 sm:flex"
           >
             <WhatsAppIcon className="h-4 w-4" />
-            Orçamento
-          </a>
-        </nav>
+            Pedir orçamento
+          </motion.a>
 
-        <button
-          className="rounded-full p-2 text-cocoa-800 transition hover:bg-blush-100 lg:hidden"
-          onClick={() => setOpen(true)}
-          aria-label="Abrir menu"
-        >
-          <MenuIcon className="h-6 w-6" />
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <div
-        className={cn(
-          "fixed inset-0 z-50 flex flex-col bg-cream-50/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        )}
-      >
-        <div className="flex items-center justify-between px-5 py-4">
-          <Logo />
-          <button className="rounded-full p-2 text-cocoa-800 hover:bg-blush-100" onClick={() => setOpen(false)} aria-label="Fechar menu">
-            <CloseIcon className="h-6 w-6" />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-cream-300 bg-white/70 text-bark-700 shadow-sm lg:hidden"
+            aria-label="Abrir menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-        <nav className="flex flex-1 flex-col items-center justify-center gap-7">
-          {links.map((l, i) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${i * 60 + 100}ms` : "0ms" }}
-              className={cn(
-                "font-serif text-3xl text-cocoa-800 transition-all duration-500 hover:text-blush-500",
-                open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-              )}
-            >
-              {l.label}
-            </a>
-          ))}
-          <a
-            href={whatsappLink("Olá! Gostaria de solicitar um orçamento personalizado.")}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-cocoa-800 px-7 py-3 font-semibold text-white"
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-cream-200 bg-cream-50/95 backdrop-blur-xl lg:hidden"
           >
-            <WhatsAppIcon className="h-5 w-5" /> Solicitar Orçamento
-          </a>
-        </nav>
-      </div>
-    </header>
+            <div className="flex flex-col gap-1 px-6 py-4">
+              {links.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  className="rounded-xl px-4 py-3 font-bold text-bark-700 transition-colors hover:bg-terra-100 hover:text-terra-700"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+              <a
+                href={waLink(DEFAULT_MESSAGE)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-wpp-500 px-5 py-3.5 font-extrabold text-white shadow-lg shadow-wpp-500/30"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Pedir orçamento no WhatsApp
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }

@@ -1,32 +1,31 @@
-import { useReveal } from "./hooks";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import About from "./components/About";
-import Gallery from "./components/Gallery";
+import Marquee from "./components/Marquee";
+import Products from "./components/Products";
 import HowItWorks from "./components/HowItWorks";
+import About from "./components/About";
 import Testimonials from "./components/Testimonials";
-import FAQ from "./components/FAQ";
-import CTA from "./components/CTA";
+import Faq from "./components/Faq";
+import CtaFinal from "./components/CtaFinal";
 import Footer from "./components/Footer";
-import WhatsAppButton from "./components/WhatsAppButton";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export default function App() {
-  useReveal();
-
   return (
-    <div className="min-h-screen">
+    <div className="grain relative min-h-screen bg-cream-50 font-body text-bark-900 antialiased">
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Gallery />
+        <Marquee />
+        <Products />
         <HowItWorks />
+        <About />
         <Testimonials />
-        <FAQ />
-        <CTA />
+        <Faq />
+        <CtaFinal />
       </main>
       <Footer />
-      <WhatsAppButton />
+      <WhatsAppFloat />
     </div>
   );
 }

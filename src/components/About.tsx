@@ -1,77 +1,128 @@
-import { useScrollY } from "../hooks";
-import { CheckIcon, FlowerIcon, HeartIcon, StarIcon } from "./Icons";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Check, Palette, ShieldCheck, Heart, Brush } from "lucide-react";
+import Reveal from "./Reveal";
+import atelier from "../assets/atelier.jpg";
 
-const values = [
-  { icon: HeartIcon, title: "Carinho em cada detalhe", text: "Cada pétala, cada expressão e cada laço é modelado à mão, sem pressa." },
-  { icon: FlowerIcon, title: "Exclusividade", text: "Nenhuma peça é igual à outra. A sua será única no mundo." },
-  { icon: StarIcon, title: "Acabamento impecável", text: "Pintura delicada, proporções perfeitas e durabilidade que atravessa gerações." },
+const checkItems = [
+  { icon: Palette, text: "Modelagem e pintura 100% manuais" },
+  { icon: Check, text: "Materiais atóxicos de alta qualidade" },
+  { icon: ShieldCheck, text: "Acabamento com verniz protetor" },
+  { icon: Heart, text: "Carinho em cada detalhe, do início ao fim" },
 ];
 
 export default function About() {
-  const y = useScrollY();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
   return (
-    <section id="sobre" className="relative overflow-hidden bg-white py-24 lg:py-32">
-      <div
-        className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-mint-100 blur-3xl"
-        style={{ transform: `translateY(${(y - 800) * 0.08}px)` }}
-      />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-2">
-        {/* Imagem */}
-        <div className="reveal reveal-left relative">
-          <div className="absolute -left-4 -top-4 h-full w-full rounded-[2rem] border-2 border-gold-300/60" />
-          <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-cocoa-800/15">
-            <img
-              src="/images/artesa.jpg"
-              alt="Mãos da artesã modelando uma flor em biscuit"
-              className="aspect-[4/5] w-full object-cover transition-transform duration-1000 hover:scale-105 sm:aspect-square lg:aspect-[4/5]"
-              loading="lazy"
+    <section
+      id="atelie"
+      ref={ref}
+      className="relative overflow-hidden py-20 lg:py-28"
+    >
+      <div className="pointer-events-none absolute left-[-12%] top-32 h-[28rem] w-[28rem] rounded-full bg-gold-300/20 blur-3xl" />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+        {/* Imagem com máscara orgânica */}
+        <div className="relative order-2 lg:order-1">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, rotate: -3 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+          >
+            <motion.div
+              animate={{ rotate: [0, 6, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-4 rounded-[3rem] bg-terra-100"
             />
-          </div>
-          <div className="absolute -bottom-8 right-4 rounded-3xl bg-cream-50 p-6 shadow-xl shadow-cocoa-800/10 sm:-right-8">
-            <p className="font-serif text-5xl font-semibold text-blush-500">12+</p>
-            <p className="mt-1 text-sm text-cocoa-700/80">anos modelando<br />sonhos em biscuit</p>
-          </div>
+            <motion.div
+              style={{ y: imgY }}
+              className="relative overflow-hidden rounded-[2.6rem] shadow-card"
+            >
+              <img
+                src={atelier}
+                alt="Mãos da artesã modelando porcelana fria no ateliê"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-bark-900/25 to-transparent" />
+            </motion.div>
+
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -right-3 -top-6 flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3 shadow-card sm:-right-6"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-terra-100">
+                <Brush className="h-5 w-5 text-terra-600" />
+              </div>
+              <div>
+                <p className="text-sm font-extrabold text-bark-900">
+                  Cada peça é única
+                </p>
+                <p className="text-xs font-bold text-bark-400">
+                  nenhuma sai igual à outra
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Texto */}
-        <div>
-          <span className="reveal text-xs font-semibold uppercase tracking-[0.3em] text-gold-500">Sobre nós</span>
-          <h2 className="reveal mt-4 font-serif text-4xl leading-tight text-cocoa-900 sm:text-5xl" style={{ transitionDelay: "80ms" }}>
-            Arte feita à mão, <em className="italic text-blush-500">com amor de verdade</em>
-          </h2>
-          <div className="reveal mt-6 space-y-4 leading-relaxed text-cocoa-700/85" style={{ transitionDelay: "160ms" }}>
-            <p>
-              Tudo começou com um pequeno topo de bolo para o aniversário da minha filha. Ao ver o brilho nos olhos dela,
-              descobri que o biscuit era muito mais que uma massa: era uma forma de eternizar sentimentos.
+        <div className="order-1 lg:order-2">
+          <Reveal>
+            <span className="font-script text-3xl text-terra-500">
+              conheça o ateliê
+            </span>
+            <h2 className="mt-2 font-display text-4xl font-semibold leading-tight text-bark-900 sm:text-5xl">
+              A arte nasce das{" "}
+              <span className="italic text-terra-600">mãos</span> e do{" "}
+              <span className="italic text-gold-500">coração</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-lg leading-relaxed text-bark-500">
+              No <strong className="text-bark-700">Artes em Biscuitt</strong>,
+              cada encomenda é tratada como uma história a ser contada. Da
+              primeira mexida na massa até a última pincelada, modelamos
+              sentimentos em porcelana fria — para que o seu momento mais
+              especial vire uma lembrança para a vida inteira.
             </p>
-            <p>
-              Hoje, no ateliê da <strong className="font-semibold text-cocoa-900">Artes em Biscuitt</strong>, cada peça nasce de uma
-              conversa. Ouço a sua história, desenho a ideia, modelo com paciência e pinto cada detalhe até que a peça
-              conte exatamente o que você quer dizer — sem palavras.
-            </p>
+          </Reveal>
+
+          <div className="mt-8 space-y-4">
+            {checkItems.map((item, i) => (
+              <motion.div
+                key={item.text}
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15 + i * 0.1, duration: 0.6 }}
+                className="flex items-center gap-4"
+              >
+                <motion.div
+                  whileHover={{ rotate: -8, scale: 1.1 }}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-soft ring-1 ring-cream-200"
+                >
+                  <item.icon className="h-5 w-5 text-olive-500" />
+                </motion.div>
+                <p className="font-bold text-bark-700">{item.text}</p>
+              </motion.div>
+            ))}
           </div>
 
-          <ul className="mt-8 space-y-5">
-            {values.map((v, i) => (
-              <li key={v.title} className="reveal flex gap-4" style={{ transitionDelay: `${220 + i * 90}ms` }}>
-                <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blush-100 to-mint-100 text-blush-500 shadow-sm">
-                  <v.icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <h3 className="font-semibold text-cocoa-900">{v.title}</h3>
-                  <p className="text-sm text-cocoa-700/80">{v.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <div className="reveal mt-8 flex flex-wrap gap-3" style={{ transitionDelay: "500ms" }}>
-            {["Materiais atóxicos", "Durabilidade garantida", "Envio para todo o Brasil"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 rounded-full bg-cream-100 px-3.5 py-1.5 text-xs font-semibold text-cocoa-700">
-                <CheckIcon className="h-3.5 w-3.5 text-mint-400" /> {t}
-              </span>
-            ))}
-          </div>
+          <Reveal delay={0.35}>
+            <p className="mt-8 font-script text-2xl text-terra-600">
+              "A maior recompensa é ver o sorriso de quem recebe."
+            </p>
+          </Reveal>
         </div>
       </div>
     </section>

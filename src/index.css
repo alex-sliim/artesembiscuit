@@ -1,52 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-script: "Caveat", cursive;
+  --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
 
-  --color-blush-50: #fdf6f5;
-  --color-blush-100: #fbe9e7;
-  --color-blush-200: #f6d3d0;
-  --color-blush-300: #efb5b0;
-  --color-blush-400: #e3908a;
-  --color-blush-500: #d2716b;
+  --color-cream-50: #fbf7ee;
+  --color-cream-100: #f6efe1;
+  --color-cream-200: #ede1c9;
+  --color-cream-300: #e2d2b1;
 
-  --color-cream-50: #fdfbf7;
-  --color-cream-100: #faf5ec;
-  --color-cream-200: #f3eadb;
-  --color-cream-300: #e8dcc6;
+  --color-terra-100: #f8e4db;
+  --color-terra-200: #f0cbb8;
+  --color-terra-300: #e6a88d;
+  --color-terra-400: #da8b69;
+  --color-terra-500: #cc7050;
+  --color-terra-600: #b4573b;
+  --color-terra-700: #94462f;
 
-  --color-mint-100: #e6f3ee;
-  --color-mint-200: #c9e5da;
-  --color-mint-300: #a6d1c1;
-  --color-mint-400: #7fb9a4;
+  --color-gold-300: #d9ba6f;
+  --color-gold-400: #c7a45a;
+  --color-gold-500: #b08d3e;
+  --color-gold-600: #96762f;
 
-  --color-gold-300: #e6cf9a;
-  --color-gold-400: #d4b26a;
-  --color-gold-500: #c19a4b;
+  --color-olive-100: #e8e9d6;
+  --color-olive-200: #d7d9b9;
+  --color-olive-300: #bbc191;
+  --color-olive-400: #9ba670;
+  --color-olive-500: #7e8a5b;
+  --color-olive-600: #646e46;
 
-  --color-cocoa-700: #5b4a44;
-  --color-cocoa-800: #43352f;
-  --color-cocoa-900: #2f2521;
+  --color-bark-100: #eadfd4;
+  --color-bark-300: #b59688;
+  --color-bark-400: #9a7a66;
+  --color-bark-500: #7a5c4b;
+  --color-bark-700: #4e362b;
+  --color-bark-900: #2e1e16;
 
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-float-slow: float 9s ease-in-out infinite;
-  --animate-spin-slow: spin 18s linear infinite;
-  --animate-pulse-ring: pulse-ring 2s ease-out infinite;
-  --animate-shimmer: shimmer 3s linear infinite;
+  --color-wpp-400: #3bd06d;
+  --color-wpp-500: #22c15e;
+  --color-wpp-600: #16a34a;
+  --color-wpp-700: #128041;
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-14px) rotate(3deg); }
+  --shadow-soft: 0 20px 60px -20px rgba(78, 54, 43, 0.25);
+  --shadow-card: 0 24px 70px -28px rgba(78, 54, 43, 0.35);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-spin-slow: spin-slow 18s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
-  @keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.7; }
-    100% { transform: scale(1.8); opacity: 0; }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
   }
 }
 
@@ -55,55 +69,42 @@ html {
 }
 
 body {
-  @apply bg-cream-50 text-cocoa-800 font-sans antialiased;
-  overflow-x: hidden;
+  background-color: var(--color-cream-50);
+  overflow-x: clip;
 }
 
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-.reveal.reveal-left { transform: translateX(-40px); }
-.reveal.reveal-right { transform: translateX(40px); }
-.reveal.reveal-scale { transform: scale(0.94); }
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+::selection {
+  background: var(--color-terra-300);
+  color: var(--color-bark-900);
 }
 
-.text-shimmer {
-  background: linear-gradient(90deg, #c19a4b 0%, #e6cf9a 40%, #c19a4b 60%, #e6cf9a 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 4s linear infinite;
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-terra-300);
+  border-radius: 999px;
+  border: 2px solid var(--color-cream-100);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-terra-400);
 }
 
-.btn-shine {
-  position: relative;
-  overflow: hidden;
-}
-.btn-shine::after {
+/* Grão artesanal sutil sobre toda a página */
+.grain::after {
   content: "";
-  position: absolute;
-  top: 0; left: -75%;
-  width: 50%; height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
-  transform: skewX(-20deg);
-  transition: left 0.6s ease;
-}
-.btn-shine:hover::after { left: 125%; }
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  html { scroll-behavior: auto; }
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes fadeZoom {
-  from { opacity: 0; transform: scale(0.94) translateY(12px); }
-  to { opacity: 1; transform: none; }
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--color-terra-400);
+  color: transparent;
 }
